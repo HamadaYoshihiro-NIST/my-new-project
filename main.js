@@ -12,3 +12,9 @@ function writeCurrentTime() {
   console.log("作成されたスプレッドシートのURL:");
   console.log(ss.getUrl());
 }
+// スプレッドシートのA1からC3までの背景色を黄色にする関数
+function setBackgroundColor() {
+    const ss = SpreadsheetApp.create("背景色変更テスト");
+    const sheet = ss.getActiveSheet();
+    sheet.getRange("A1:C3").setBackground("yellow");
+}
