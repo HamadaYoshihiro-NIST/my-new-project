@@ -39,3 +39,26 @@ function writeTimeAndSetBackground() {
   console.log("更新されたスプレッドシートのURL:");
   console.log(ss.getUrl());
 }
+// writeTimeAndSetBackgroundを実行したあと、A1セルの文字、B1セルの日付型、B1セルの背景色(黄色)を自動検証し、すべて正しければ「TEST PASS」、違えば「TEST FAIL」とログに出力するテスト関数
+function testWriteTimeAndSetBackground() {
+  // 1. テスト対象の関数を実行
+  writeTimeAndSetBackground();
+
+  // 2. 結果を自動検証（アサーション）
+  const ss = SpreadsheetApp.openById("17N3uNBemPNpi1m0Jcaqf-Q2q4mVFSiXOdgfLo-7KGyM");
+  const sheet = ss.getActiveSheet();
+
+  const label = sheet.getRange("A1").getValue();
+  const timeVal = sheet.getRange("B1").getValue();
+  const bgColor = sheet.getRange("B1").getBackground();
+
+  const isLabelOk = (label === "実行時刻:");
+  const isTimeOk = (timeVal instanceof Date);
+  const isColorOk = (bgColor === "#ffff00"); // yellowのカラーコード
+
+  if (isLabelOk && isTimeOk && isColorOk) {
+    console.log("TEST PASS: すべての検証項目をクリアしました");
+  } else {
+    console.error("TEST FAIL: 検証エラー", { isLabelOk, isTimeOk, isColorOk });
+  }
+}
